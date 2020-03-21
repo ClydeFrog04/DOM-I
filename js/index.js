@@ -6,6 +6,8 @@ const siteContent = {
     "nav-item-4": "Features",
     "nav-item-5": "About",
     "nav-item-6": "Contact",
+      "nav-item-7": "Sign In",
+      "nav-item-8": "Create Account",
     "img-src": "img/logo.png"
   },
   "cta": {
@@ -41,6 +43,22 @@ const siteContent = {
 let logo = document.getElementById("logo-img");
 logo.setAttribute('src', siteContent["nav"]["img-src"]);
 
+let navbar = document.getElementsByTagName("nav");
+
+navbar[navbar.length-1].appendChild(document.createElement("a"));//append a new anchor
+navbar[navbar.length-1].appendChild(document.createElement("a"));
+
+let navAs = navbar[0].getElementsByTagName("a");
+
+for (let i = 0; i < navAs.length; i++) {
+    //nav-item-1
+    let navItem = "nav-item-" + (i + 1);
+    navAs[i].text = siteContent["nav"][navItem];
+    navAs[i].setAttribute("href", "#");//if this was a legit site project, we would have another json attribute for the hrefs and set them here
+    navAs[i].style.color = "green";
+}
+
+
 let codeSnip = document.getElementById("cta-img");
 codeSnip.setAttribute('src', siteContent["cta"]["img-src"]);
 
@@ -51,6 +69,7 @@ let headings = document.getElementsByTagName("h1");
 headings[0].textContent = siteContent["cta"]["h1"];
 
 let mainContent = document.getElementsByClassName("top-content")[0].childNodes;
+//todo: I think there is something to this code, but I need to play with it more to figure it out
 /*
 const filterLargeStates = data.filter((state) => {
   return state.population >= 650000;
@@ -105,3 +124,37 @@ console.log(contactPs);
 let footer = document.getElementsByTagName("footer");
 let footerP = footer[0].getElementsByTagName("p");
 footerP[0].textContent = siteContent["footer"]["copyright"];
+
+
+
+//event listeners
+const eventSiteContent = {
+    "cta": {
+        "h1": "You can get started now!",
+        "button": "Get Started",
+        "img-src": "img/header-img.png"
+    },
+};
+
+const getStartedBtn = buttons[0];
+let trigger = true;//this variable will be used to determine what to do. Its value will flip flop
+const codeSnipDefaultStyle = codeSnip.style;//will be used to reset the style
+getStartedBtn.addEventListener('click', () =>{
+    let curHeading = headings.item(0).textContent;
+    headings.item(0).textContent = curHeading === siteContent["cta"]["h1"] ? eventSiteContent["cta"]["h1"] : siteContent["cta"]["h1"];
+    // if(codeSnip.hasAttribute("src")) codeSnip.removeAttribute("src");
+    // else codeSnip.setAttribute("src", siteContent["cta"]["img-src"]);
+    if(trigger){
+        codeSnip.style.display = "none";
+    }else{
+        codeSnip.style = codeSnipDefaultStyle;
+    }
+    trigger = !trigger;
+});
+
+
+
+
+
+
+
